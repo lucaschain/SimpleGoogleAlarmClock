@@ -10,7 +10,7 @@ import random                                     #to play the mp3 later
 from ConfigParser import SafeConfigParser
 from feed.date.rfc3339 import tf_from_timestamp   #also for the comparator
 from datetime import datetime, timedelta          #for the time on the rpi end
-from apscheduler.scheduler import Scheduler       #this will let us check the calender on a regular interval
+from apscheduler.schedulers.background import BackgroundScheduler       #this will let us check the calender on a regular interval
 import logging                                   # used for development. Not needed for normal usage.
 logging.basicConfig(filename='wakeup.log', filemode='w')
 
@@ -80,6 +80,6 @@ def callable_func():
 #************************************************************************************# 
 #****           Run scheduler service                                            ****#
 #************************************************************************************# 
-sched = Scheduler(standalone=True)
+sched = BackgroundScheduler(standalone=True)
 sched.add_interval_job(callable_func,seconds=10)  #  define refresh rate. Set to every 10 seconds by default
 sched.start()                                     #  runs the program indefinatly on an interval of x seconds
